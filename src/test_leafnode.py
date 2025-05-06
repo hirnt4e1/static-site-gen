@@ -1,6 +1,7 @@
 import unittest
 
-from leafnode import LeafNode
+from textnode import TextNode, TextType
+from leafnode import LeafNode, text_node_to_html_node
 
 class TestLeafNode(unittest.TestCase):
     def test_eq(self):
@@ -17,6 +18,11 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode('a', "Click me!", {'href': 'https://www.google.com'})
         actual = node.to_html()
         self.assertEqual(expected, actual)
+    def test_text(self):
+        node = TextNode("This is a text node", TextType.TEXT)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, None)
+        self.assertEqual(html_node.value, "This is a text node")
 
 if __name__ == "__main__":
     unittest.main()
