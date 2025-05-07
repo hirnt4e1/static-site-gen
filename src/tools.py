@@ -95,3 +95,12 @@ def split_nodes_link(old_nodes):
             else:
                 new_nodes.append(TextNode(node_parts[i][0], TextType.LINK, node_parts[i][1]))
     return new_nodes
+
+def text_to_textnodes(text):
+    new_nodes = [TextNode(text, TextType.TEXT)]
+    split_delimiters = [("**", TextType.BOLD), ("_", TextType.ITALIC), ("`", TextType.CODE)]
+    for i in range(len(split_delimiters)):
+        new_nodes = split_nodes_delimiter(new_nodes.copy(), *split_delimiters[i])
+    new_nodes = split_nodes_image(new_nodes.copy())
+    new_nodes = split_nodes_link(new_nodes.copy())
+    return new_nodes
